@@ -4,19 +4,26 @@ import Button from "@material-ui/core/Button";
 function TimerWraper() {
     const [time0, setTime0] = useState(Date.now());
     const [isOn, setRunning] = useState(false);
+    const [elapsedTime, setElapsedTime] = useState(0);
 
     const resetTimer = () => {
         setTime0(Date.now());
+        setElapsedTime(0);
+        setRunning(false);
     };
 
     const startTimer = () => {
-        setRunning(true);
-        console.log(isOn)
+        if (!isOn) {
+            setTime0(Date.now() - elapsedTime);
+            setRunning(true);
+        }
     };
 
     const stopTimer = () => {
-        setRunning(false);
-        console.log(isOn)
+        if (isOn) {
+            setElapsedTime(Date.now() - time0);
+            setRunning(false);
+        }
     };
 
     return (
@@ -40,8 +47,10 @@ function Timer({time0, isOn}) {
     };
 
     useEffect(() => {
-        const idInterval = setInterval(refreshTimer, 1000);
-        return () => clearInterval(idInterval)
+        if (isOn) {
+            const idInterval = setInterval(refreshTimer, 1000);
+            return () => clearInterval(idInterval)
+        }
     });
 
     useEffect(() => {
