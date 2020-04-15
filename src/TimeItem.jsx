@@ -11,6 +11,9 @@ function TimeItem({time, deleteItem, id}) {
             <ListItemText>
                 {time}
             </ListItemText>
+            <ListItemText>
+                Czas {id}
+            </ListItemText>
             <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label='delete' onClick={() => deleteItem(id)}>
                     <DeleteIcon />
