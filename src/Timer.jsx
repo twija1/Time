@@ -77,14 +77,14 @@ function TimerWraper() {
     )
 }
 
-function Timer({time0, isOn}) {
+function Timer({isOn, timeElapsed}) {
     const [timer, setTimer] = useState('00:00:00');
 
     const refreshTimer = () => {
-        const timeElapsed = new Date(Date.now() - time0);
-        const minutes = timeElapsed.getMinutes().toString().padStart(2, '0');
-        const seconds = timeElapsed.getSeconds().toString().padStart(2, '0');
-        const milliseconds = timeElapsed.getMilliseconds().toString().slice(0, -1).padStart(2, '0');
+        const timerElapsed = new Date(timeElapsed);
+        const minutes = timerElapsed.getMinutes().toString().padStart(2, '0');
+        const seconds = timerElapsed.getSeconds().toString().padStart(2, '0');
+        const milliseconds = timerElapsed.getMilliseconds().toString().slice(0, -1).padStart(2, '0');
         setTimer(`${minutes}:${seconds}:${milliseconds}`)
     };
 
@@ -97,7 +97,7 @@ function Timer({time0, isOn}) {
 
     useEffect(() => {
         refreshTimer()
-    }, [time0]);
+    }, [timeElapsed]);
 
     return (
         <div>
