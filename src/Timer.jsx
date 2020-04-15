@@ -3,6 +3,14 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import TimeItem from './TimeItem'
 
+const nowafunkcja = function*() {
+    let index = 1;
+    while (true){
+        yield index++
+    }
+};
+const indexGenerator = nowafunkcja();
+
 function TimerWraper() {
     const [time0, setTime0] = useState(Date.now());
     const [isOn, setRunning] = useState(false);
@@ -14,7 +22,7 @@ function TimerWraper() {
         const minutes = timeElapsed.getMinutes().toString().padStart(2, '0');
         const seconds = timeElapsed.getSeconds().toString().padStart(2, '0');
         const milliseconds = timeElapsed.getMilliseconds().toString().slice(0, -1).padStart(2, '0');
-        setListOfTimes([`${minutes}:${seconds}:${milliseconds}`, ...listOfTimes])
+        setListOfTimes([{id: indexGenerator.next().value, timeElapsed: `${minutes}:${seconds}:${milliseconds}`}, ...listOfTimes])
     };
 
     const resetTimer = () => {
