@@ -56,11 +56,17 @@ function TimerWraper() {
         }
     });
 
-    const showListofTimes = listOfTimes.map((time, index) => <TimeItem time={time} key={index}/>);
+
+
+    const deleteItem = (id) => {
+        setListOfTimes(listOfTimes.filter((time) => time.id !== id))
+    };
+
+    const showListofTimes = listOfTimes.map((time) => <TimeItem time={time.timeElapsed} key={time.id} deleteItem={deleteItem} id={time.id}/>);
 
     return (
         <div>
-            <Timer time0={time0} isOn={isOn}/>
+            <Timer isOn={isOn} timeElapsed={elapsedTime}/>
             <Button onClick={resetTimer}>reset</Button>
             {!isOn?<Button onClick={startTimer}>start</Button>:<Button onClick={stopTimer}>stop</Button>}
             <Button onClick={addTime}>add time</Button>

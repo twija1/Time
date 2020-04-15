@@ -5,14 +5,14 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete'
 
-function TimeItem({time}) {
+function TimeItem({time, deleteItem, id}) {
     return (
         <ListItem>
             <ListItemText>
                 {time}
             </ListItemText>
             <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label='delete'>
+                <IconButton edge="end" aria-label='delete' onClick={() => deleteItem(id)}>
                     <DeleteIcon />
                 </IconButton>
             </ListItemSecondaryAction>
