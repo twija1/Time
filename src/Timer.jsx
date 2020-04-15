@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+import TimeItem from './TimeItem'
 
 function TimerWraper() {
     const [time0, setTime0] = useState(Date.now());
@@ -15,7 +14,7 @@ function TimerWraper() {
         const minutes = timeElapsed.getMinutes().toString().padStart(2, '0');
         const seconds = timeElapsed.getSeconds().toString().padStart(2, '0');
         const milliseconds = timeElapsed.getMilliseconds().toString().slice(0, -1).padStart(2, '0');
-        setListOfTimes([...listOfTimes, `${minutes}:${seconds}:${milliseconds}`])
+        setListOfTimes([`${minutes}:${seconds}:${milliseconds}`, ...listOfTimes])
     };
 
     const resetTimer = () => {
@@ -49,7 +48,7 @@ function TimerWraper() {
         }
     });
 
-    const showListofTimes = listOfTimes.map(time => <ListItem><ListItemText>{time}</ListItemText></ListItem>);
+    const showListofTimes = listOfTimes.map((time, index) => <TimeItem time={time} key={index}/>);
 
     return (
         <div>
