@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
-import TimeItem from './TimeItem'
+import TimeRecordItem from './TimeRecordItem'
 
 const nowafunkcja = function*() {
     let index = 1;
@@ -22,7 +22,8 @@ function TimerWraper() {
         const minutes = timeElapsed.getMinutes().toString().padStart(2, '0');
         const seconds = timeElapsed.getSeconds().toString().padStart(2, '0');
         const milliseconds = timeElapsed.getMilliseconds().toString().slice(0, -1).padStart(2, '0');
-        setListOfTimes([{id: indexGenerator.next().value, timeElapsed: `${minutes}:${seconds}:${milliseconds}`}, ...listOfTimes])
+        const index = indexGenerator.next().value;
+        setListOfTimes([{id: index, name: `Time ${index}`, timeElapsed: `${minutes}:${seconds}:${milliseconds}`}, ...listOfTimes])
     };
 
     const resetTimer = () => {
@@ -56,13 +57,15 @@ function TimerWraper() {
         }
     });
 
-
+    const editName = (id, newName) => {
+        console.log(`Change item ${id} - ${newName}`)
+    };
 
     const deleteItem = (id) => {
         setListOfTimes(listOfTimes.filter((time) => time.id !== id))
     };
 
-    const showListofTimes = listOfTimes.map((time) => <TimeItem time={time.timeElapsed} key={time.id} deleteItem={deleteItem} id={time.id}/>);
+    const showListofTimes = listOfTimes.map((time) => <TimeRecordItem time={time.timeElapsed} key={time.id} deleteItem={deleteItem} id={time.id} name={time.name} editName={editName}/>);
 
     return (
         <div>
