@@ -11,6 +11,14 @@ const nowafunkcja = function*() {
 };
 const indexGenerator = nowafunkcja();
 
+const replaceName = (list, id, newName) => {
+    return list.map((element) => element.id !== id ? element : {...element, name: newName})
+};
+
+const replace = (list, id, property, value) => {
+    return list.map((element) => element.id !== id ? element : {...element, [property]: value})
+};
+
 function TimerWraper() {
     const [time0, setTime0] = useState(Date.now());
     const [isOn, setRunning] = useState(false);
