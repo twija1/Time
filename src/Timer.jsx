@@ -66,7 +66,7 @@ function TimerWraper() {
     });
 
     const editName = (id, newName) => {
-        console.log(`Change item ${id} - ${newName}`)
+        setListOfTimes(replace(listOfTimes, id, 'name', newName));
     };
 
     const deleteItem = (id) => {
