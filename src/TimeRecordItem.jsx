@@ -10,14 +10,21 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 function TimeRecordItem({time, deleteItem, id, name, editName}) {
     const [inputValue, setInputValue] = useState(name);
+    const [isEditing, setIsEdting] = useState(false);
 
     const handleChange = (event) => {
         setInputValue(event.target.value);
     };
 
     const handleSubmit = (e) => {
-        editName(id, inputValue);
-        e.preventDefault();
+        if (isEditing) {
+            editName(id, inputValue);
+            e.preventDefault();
+        }
+    };
+
+    const edit = () => {
+        setIsEdting(!isEditing);
     };
 
     return (
@@ -26,21 +33,24 @@ function TimeRecordItem({time, deleteItem, id, name, editName}) {
                 {time}
             </ListItemText>
             <ListItemIcon>
-                <IconButton edge="end" aria-label='edit'>
-                    <EditIcon />
+                <IconButton edge="end" aria-label='edit' onClick={edit}>
+                    <EditIcon/>
                 </IconButton>
             </ListItemIcon>
             <ListItemText>
                 {name}
             </ListItemText>
-            <ListItemSecondaryAction>
-                <form noValidate autoComplete='off' onSubmit={handleSubmit}>
-                    <TextField value={inputValue} id="outlined-basic" label="Outlined" variant="outlined" onChange={handleChange} />
-                </form>
-            </ListItemSecondaryAction>
+            {
+                isEditing ? <ListItemSecondaryAction>
+                    <form noValidate autoComplete='off' onSubmit={handleSubmit}>
+                        <TextField value={inputValue} id="outlined-basic" label="Name" variant="outlined"
+                                   onChange={handleChange}/>
+                    </form>
+                </ListItemSecondaryAction> : null
+            }
             <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label='delete' onClick={() => deleteItem(id)}>
-                    <DeleteIcon />
+                    <DeleteIcon/>
                 </IconButton>
             </ListItemSecondaryAction>
         </ListItem>
