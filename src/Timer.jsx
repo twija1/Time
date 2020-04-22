@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import Button from "@material-ui/core/Button";
+import {timeToString} from "./helpers";
 import List from "@material-ui/core/List";
 import TimeRecordItem from './TimeRecordItem'
 
@@ -112,7 +112,7 @@ function Timer({isOn, timeElapsed}) {
 
     return (
         <div>
-            <div>{timer}</div>
+            <div>{timeToString(timer)}</div>
         </div>
     )
 }

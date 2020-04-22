@@ -7,6 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import TextField from "@material-ui/core/TextField";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+import {timeToString} from './helpers'
 
 function TimeRecordItem({time, deleteItem, id, name, editName}) {
     const [inputValue, setInputValue] = useState(name);
@@ -30,7 +31,7 @@ function TimeRecordItem({time, deleteItem, id, name, editName}) {
     return (
         <ListItem>
             <ListItemText>
-                {time}
+                {timeToString(time)}
             </ListItemText>
             <ListItemIcon>
                 <IconButton edge="end" aria-label='edit' onClick={edit}>

@@ -12,3 +12,11 @@ export function updateElementsName(list, id, newName){
 export function updateElement(list, id, property, value){
     return list.map((element) => element.id !== id ? element : {...element, [property]: value})
 }
+
+export function timeToString(time){
+    const timeElapsed = new Date(time);
+    const minutes = timeElapsed.getMinutes().toString().padStart(2, '0');
+    const seconds = timeElapsed.getSeconds().toString().padStart(2, '0');
+    const milliseconds = timeElapsed.getMilliseconds().toString().slice(0, -1).padStart(2, '0');
+    return `${minutes}:${seconds}:${milliseconds}`;
+}
