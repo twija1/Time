@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
 import Clock from "./Clock";
-import TimerWraper from "./Timer"
+import TimerWrapper from "./TimerWrapper"
 
 function App() {
 
   return (
     <div className="App">
       <Clock/>
-      <TimerWraper/>
+      <TimerWrapper/>
     </div>
   );
 }
