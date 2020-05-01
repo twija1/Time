@@ -15,7 +15,7 @@ function TimerWrapper() {
 
     const addTime = () => {
         const index = indexGenerator.next().value;
-        setListOfTimes([{id: index, name: `Time ${index}`, timeElapsed: elapsedTime}, ...listOfTimes])
+        setListOfTimeRecords([{id: index, name: `Time ${index}`, timeElapsed: elapsedTime, date: new Date(), ownerID: 1}, ...listOfTimeRecords])
     };
 
     const resetTimer = () => {
@@ -57,7 +57,7 @@ function TimerWrapper() {
         setListOfTimes(listOfTimes.filter((time) => time.id !== id))
     };
 
-    const showListofTimes = listOfTimes.map((time) => <TimeRecordItem time={time.timeElapsed} key={time.id} deleteItem={deleteItem} id={time.id} name={time.name} editName={editName}/>);
+    const showListofTimes = listOfTimeRecords.map((time) => <TimeRecordItem time={time.timeElapsed} key={time.id} deleteItem={deleteItem} id={time.id} name={time.name} editName={editName} date={time.date}/>);
 
     return (
         <div>

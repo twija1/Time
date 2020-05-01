@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {timeToString} from "./helpers";
+import {timeToString, showDate} from './helpers'
 
 function Timer({isOn, timeElapsed}) {
     const [timer, setTimer] = useState(0);
@@ -21,6 +21,7 @@ function Timer({isOn, timeElapsed}) {
 
     return (
         <div>
+            <div>{showDate()}</div>
             <div>{timeToString(timer)}</div>
         </div>
     )

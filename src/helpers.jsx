@@ -22,6 +22,16 @@ export function timeToString(time){
     const milliseconds = timeElapsed.getMilliseconds().toString().slice(0, -1).padStart(2, '0');
     return `${minutes}:${seconds}:${milliseconds}`;
 }
+
+export function showDate(){
+    const today = new Date();
+    return today.getDate() + "." + parseInt(today.getMonth()+1) + "." + today.getFullYear()
+}
+
+export function showGivenDate(date){
+    return date.getDate() + "." + parseInt(date.getMonth()+1) + "." + date.getFullYear()
+}
+
 export function isLogin() {
     return localStorage.getItem(TOKEN_KEY)
 }
