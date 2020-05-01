@@ -21,6 +21,7 @@ function TimeRecordItem({time, deleteItem, id, name, editName, date}) {
         if (isEditing) {
             editName(id, inputValue);
             e.preventDefault();
+            setIsEdting(!isEditing);
         }
     };
 
@@ -42,16 +43,15 @@ function TimeRecordItem({time, deleteItem, id, name, editName, date}) {
                 </IconButton>
             </ListItemIcon>
             <ListItemText>
-                {name}
+                {
+                    isEditing ?
+                        <form noValidate autoComplete='off' onSubmit={handleSubmit}>
+                            <TextField value={inputValue} id="outlined-basic" label="Name" variant="outlined"
+                                       onChange={handleChange}/>
+                        </form>
+                        : name
+                }
             </ListItemText>
-            {
-                isEditing ? <ListItemSecondaryAction>
-                    <form noValidate autoComplete='off' onSubmit={handleSubmit}>
-                        <TextField value={inputValue} id="outlined-basic" label="Name" variant="outlined"
-                                   onChange={handleChange}/>
-                    </form>
-                </ListItemSecondaryAction> : null
-            }
             <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label='delete' onClick={() => deleteItem(id)}>
                     <DeleteIcon/>
