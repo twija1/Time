@@ -11,7 +11,7 @@ function TimerWrapper() {
     const [time0, setTime0] = useState(Date.now());
     const [isOn, setRunning] = useState(false);
     const [elapsedTime, setElapsedTime] = useState(0);
-    const [listOfTimes, setListOfTimes] = useState([]);
+    const [listOfTimeRecords, setListOfTimeRecords] = useState([]);
 
     const addTime = () => {
         const index = indexGenerator.next().value;
@@ -50,11 +50,11 @@ function TimerWrapper() {
     });
 
     const editName = (id, newName) => {
-        setListOfTimes(updateElement(listOfTimes, id, 'name', newName));
+        setListOfTimeRecords(updateElement(listOfTimeRecords, id, 'name', newName));
     };
 
     const deleteItem = (id) => {
-        setListOfTimes(listOfTimes.filter((time) => time.id !== id))
+        setListOfTimeRecords(listOfTimeRecords.filter((time) => time.id !== id))
     };
 
     const showListofTimes = listOfTimeRecords.map((time) => <TimeRecordItem time={time.timeElapsed} key={time.id} deleteItem={deleteItem} id={time.id} name={time.name} editName={editName} date={time.date}/>);
