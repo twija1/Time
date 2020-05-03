@@ -1,5 +1,3 @@
-const TOKEN_KEY = 'jwt';
-
 export function* idGenerator(){
     let index = 1;
     while (true){
@@ -56,8 +54,10 @@ export function login({email, password}) {
 }
 
 export function logout() {
-    localStorage.removeItem(TOKEN_KEY)
+    localStorage.removeItem('TOKEN_KEY')
+    window.location.reload()
 }
+
 export function register({name, email, password}) {
     return fetch("http://localhost:4000/auth/register", {
         method: "POST",
