@@ -43,3 +43,22 @@ export function login() {
 export function logout() {
     localStorage.removeItem(TOKEN_KEY)
 }
+export function register({name, email, password}) {
+    return fetch("http://localhost:4000/auth/register", {
+        method: "POST",
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password
+        })
+    })
+        .then(response => {
+            return response.json()
+        })
+        .catch(err => {
+            return err
+        });
+}
