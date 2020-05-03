@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {Link} from "react-router-dom";
 import {login} from "./helpers";
 
 function SignIn() {
@@ -9,7 +8,10 @@ function SignIn() {
     const [password, setPassword] = useState('');
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        login({email, password}).then(response => {
+            response.token ? localStorage.setItem('TOKEN_KEY', response.token) : console.log('ERRRORRRRRR');
+            // window.location.reload()
+        });
     };
 
     const handleEmailChange = (event) => {
@@ -25,7 +27,7 @@ function SignIn() {
             <form onSubmit={handleSubmit}>
                 <TextField value={email} label='E-mail' variant='outlined' onChange={handleEmailChange}/>
                 <TextField value={password} label='Password' variant='outlined' onChange={handlePasswordChange} type='password'/>
-                <Button onClick={login}>Submit</Button>
+                <Button type='submit'>Submit</Button>
             </form>
         </div>
     )
