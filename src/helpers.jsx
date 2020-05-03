@@ -33,11 +33,26 @@ export function showGivenDate(date){
 }
 
 export function isLogin() {
-    return localStorage.getItem(TOKEN_KEY)
+    return !!localStorage.getItem('TOKEN_KEY') //localStorage.getItem('TOKEN_KEY') ? true : false
 }
 
-export function login() {
-    localStorage.setItem(TOKEN_KEY, 'TestLogin')
+export function login({email, password}) {
+    return fetch("http://localhost:4000/auth/login", {
+        method: "POST",
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password
+        })
+    })
+        .then(response => {
+            return response.json()
+        })
+        .catch(err => {
+            return err
+        });
 }
 
 export function logout() {
@@ -61,4 +76,5 @@ export function register({name, email, password}) {
         .catch(err => {
             return err
         });
-}
+}
+
