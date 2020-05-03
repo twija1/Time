@@ -9,7 +9,8 @@ import Button from "@material-ui/core/Button";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 import * as lg from './helpers'
-import { Redirect } from 'react-router-dom'
+import LandingPage from "./LandingPage";
+import Register from "./Register";
 
 function App() {
 
@@ -18,22 +19,23 @@ function App() {
             <div>
                 <Button component={Link} to='/clock'>clock</Button>
                 <Button component={Link} to='/stopper'>stopper</Button>
-                <Button component={Link} to='/'>signin</Button>
+                <Button component={Link} to='/signin'>signin</Button>
                 {lg.isLogin() ?
                     <Button onClick={() => {
                         lg.logout();
-                        window.location.reload()
                     }}>logout</Button>
-                    : <Button onClick={() => {
-                        lg.login();
-                        window.location.reload()
-                    }}>login</Button>}
+                    : undefined}
+                {lg.isLogin() ?
+                    undefined :
+                    <Button component={Link} to='/register'>register</Button>}
             </div>
             <Container>
                 <Switch>
                     <PrivateRoute path='/clock' component={Clock}/>
                     <PrivateRoute path='/stopper' component={TimerWrapper}/>
-                    <PublicRoute restricted={true} exact path='/' component={SignIn}/>
+                    <PublicRoute restricted={true} exact path='/signin' component={SignIn}/>
+                    <PublicRoute restricted={true} exact path='/register' component={Register}/>
+                    <PublicRoute restricted={true} exact path='/' component={LandingPage}/>
                 </Switch>
             </Container>
         </div>
