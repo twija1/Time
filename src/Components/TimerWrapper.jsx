@@ -1,9 +1,10 @@
-import {idGenerator, updateElement} from "./helpers";
+import {idGenerator, updateElement} from "../helpers";
 import React, {useEffect, useState} from "react";
 import TimeRecordItem from "./TimeRecordItem";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import Timer from "./Timer";
+import {getAllTimeRecords} from '../helpers'
 
 const indexGenerator = idGenerator();
 
@@ -68,6 +69,7 @@ function TimerWrapper() {
             <List>
                 {showListofTimes}
             </List>
+            {getAllTimeRecords()}
         </div>
     )
 }

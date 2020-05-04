@@ -7,7 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import TextField from "@material-ui/core/TextField";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import {showDate, showGivenDate, timeToString} from './helpers'
+import {showDate, showGivenDate, timeToString} from '../helpers'
 
 function TimeRecordItem({time, deleteItem, id, name, editName, date}) {
     const [inputValue, setInputValue] = useState(name);
