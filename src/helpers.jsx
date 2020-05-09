@@ -41,8 +41,8 @@ export function login({email, password}) {
             "content-type": "application/json"
         },
         body: JSON.stringify({
-            email: email,
-            password: password
+            email,
+            password
         })
     })
         .then(response => {
@@ -54,7 +54,7 @@ export function login({email, password}) {
 }
 
 export function logout() {
-    localStorage.removeItem('TOKEN_KEY')
+    localStorage.removeItem('TOKEN_KEY');
     window.location.reload()
 }
 
@@ -78,3 +78,81 @@ export function register({name, email, password}) {
         });
 }
 
+export function getUserTimeRecords() {
+    const token = localStorage.getItem('TOKEN_KEY');
+    return fetch("http://localhost:4000/timeRecords", {
+        method: "GET",
+        headers: {
+            "authorization": "Bearer "+token
+        }
+    })
+        .then(response => {
+            return response.json()
+        })
+        .catch(err => {
+            return err
+        });
+}
+
+export function addTimeRecord({name, timeElapsed, startDate, endDate}) {
+    const token = localStorage.getItem('TOKEN_KEY');
+    return fetch("http://localhost:4000/timeRecords", {
+        method: "POST",
+        headers: {
+            "content-type": "application/json",
+            "authorization": "Bearer "+token
+        },
+        body: JSON.stringify({
+            name,
+            timeElapsed,
+            startDate,
+            endDate
+        })
+    })
+        .then(response => {
+            return response.json()
+        })
+        .catch(err => {
+            return err
+        });
+}
+
+export function deleteTimeRecord({id}) {
+    const token = localStorage.getItem('TOKEN_KEY');
+    return fetch("http://localhost:4000/timeRecords/"+id, {
+        method: "DELETE",
+        headers: {
+            "authorization": "Bearer "+token
+        }
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            return err;
+        });
+}
+
+export function editTimeRecord({id, name, timeElapsed, startDate, endDate}) {
+    const token = localStorage.getItem('TOKEN_KEY');
+    return fetch("http://localhost:4000/timeRecords/"+id, {
+        method: "PUT",
+        headers: {
+            "content-type": "application/json",
+            "authorization": "Bearer "+token
+        },
+        body: JSON.stringify({
+            name,
+            timeElapsed,
+            startDate,
+            endDate
+        })
+    })
+        .then(response => {
+            console.log(response.json())
+            return response.json();
+        })
+        .catch(err => {
+            return err;
+        });
+}

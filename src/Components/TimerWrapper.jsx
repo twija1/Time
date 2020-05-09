@@ -4,7 +4,7 @@ import TimeRecordItem from "./TimeRecordItem";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import Timer from "./Timer";
-import {getAllTimeRecords} from '../helpers'
+import {getUserTimeRecords, addTimeRecord, deleteTimeRecord, editTimeRecord} from '../helpers'
 
 const indexGenerator = idGenerator();
 
@@ -12,11 +12,13 @@ function TimerWrapper() {
     const [time0, setTime0] = useState(Date.now());
     const [isOn, setRunning] = useState(false);
     const [elapsedTime, setElapsedTime] = useState(0);
-    const [listOfTimeRecords, setListOfTimeRecords] = useState([]);
+    const [fetchedListOfTimes, setFetchedListOfTimes] = useState([]);
 
     const addTime = () => {
         const index = indexGenerator.next().value;
-        setListOfTimeRecords([{id: index, name: `Time ${index}`, timeElapsed: elapsedTime, date: new Date(), ownerID: 1}, ...listOfTimeRecords])
+        addTimeRecord({name: `Time ${index}`, timeElapsed: elapsedTime, startDate: Date.now(), endDate: Date.now()}).then(response => {
+            updateTimeRecords();
+        })
     };
 
     const resetTimer = () => {
@@ -43,6 +45,17 @@ function TimerWrapper() {
         setElapsedTime(Date.now() - time0);
     };
 
+    const updateTimeRecords = () => {
+        getUserTimeRecords().then(response => {
+            const fetchedRecords = response.map(({name, timeElapsed, id, startDate, endDate}) => ({name, timeElapsed, id, startDate, endDate}));
+            setFetchedListOfTimes(fetchedRecords);
+        });
+    };
+
+    useEffect(() => {
+        updateTimeRecords();
+    }, []);
+
     useEffect(() => {
         if (isOn) {
             const idInterval = setInterval(refreshTimeElapsed, 10);
@@ -50,15 +63,20 @@ function TimerWrapper() {
         }
     });
 
-    const editName = (id, newName) => {
-        setListOfTimeRecords(updateElement(listOfTimeRecords, id, 'name', newName));
+    const editName = ({id, name}) => {
+        const editingTimeRecord = fetchedListOfTimes.find(time => time.id === id);
+        editTimeRecord({...editingTimeRecord, name}).then(response => {
+            updateTimeRecords()
+        })
     };
 
     const deleteItem = (id) => {
-        setListOfTimeRecords(listOfTimeRecords.filter((time) => time.id !== id))
+        deleteTimeRecord({id}).then(response => {
+            updateTimeRecords()
+        })
     };
 
-    const showListofTimes = listOfTimeRecords.map((time) => <TimeRecordItem time={time.timeElapsed} key={time.id} deleteItem={deleteItem} id={time.id} name={time.name} editName={editName} date={time.date}/>);
+    const showListofTimes = fetchedListOfTimes.map((time) => <TimeRecordItem time={time.timeElapsed} key={time.id} deleteItem={deleteItem} id={time.id} name={time.name} editName={editName} endDate={new Date(time.endDate)} startDate={new Date(time.startDate)}/>);
 
     return (
         <div>
@@ -69,7 +87,6 @@ function TimerWrapper() {
             <List>
                 {showListofTimes}
             </List>
-            {getAllTimeRecords()}
         </div>
     )
 }
