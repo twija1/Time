@@ -7,19 +7,19 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import TextField from "@material-ui/core/TextField";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import {showDate, showGivenDate, timeToString} from '../helpers'
+import {showGivenDate, timeToString} from '../helpers'
 
-function TimeRecordItem({time, deleteItem, id, name, editName, date}) {
-    const [inputValue, setInputValue] = useState(name);
+function TimeRecordItem({time, deleteItem, id, name, editName, startDate, endDate}) {
+    const [inputName, setInputName] = useState(name);
     const [isEditing, setIsEdting] = useState(false);
 
     const handleChange = (event) => {
-        setInputValue(event.target.value);
+        setInputName(event.target.value);
     };
 
     const handleSubmit = (e) => {
         if (isEditing) {
-            editName(id, inputValue);
+            editName({id, name: inputName});
             e.preventDefault();
             setIsEdting(!isEditing);
         }
@@ -35,7 +35,7 @@ function TimeRecordItem({time, deleteItem, id, name, editName, date}) {
                 {timeToString(time)}
             </ListItemText>
             <ListItemText>
-                {showGivenDate(date)}
+                {showGivenDate(startDate)}
             </ListItemText>
             <ListItemIcon>
                 <IconButton edge="end" aria-label='edit' onClick={edit}>
@@ -46,10 +46,10 @@ function TimeRecordItem({time, deleteItem, id, name, editName, date}) {
                 {
                     isEditing ?
                         <form noValidate autoComplete='off' onSubmit={handleSubmit}>
-                            <TextField value={inputValue} id="outlined-basic" label="Name" variant="outlined"
+                            <TextField value={inputName} id="outlined-basic" label="Name" variant="outlined"
                                        onChange={handleChange}/>
                         </form>
-                        : name
+                        : inputName
                 }
             </ListItemText>
             <ListItemSecondaryAction>
