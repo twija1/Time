@@ -7,11 +7,15 @@ function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (event) => {
         login({email, password}).then(response => {
-            response.token ? localStorage.setItem('TOKEN_KEY', response.token) : console.log('ERRRORRRRRR');
-            window.location.reload()
+            // eslint-disable-next-line no-unused-expressions
+            if(response.token) {
+                localStorage.setItem('TOKEN_KEY', response.token);
+                window.location.reload()
+            }
         });
+        event.preventDefault();
     };
 
     const handleEmailChange = (event) => {
